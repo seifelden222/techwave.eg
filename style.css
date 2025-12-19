@@ -1,150 +1,297 @@
-:root{
-  --primary:#3a80c4;
-  --accent:#27285e;
-  --grad: linear-gradient(135deg, #3a80c4 0%, #27285e 100%);
-  --glow: 0 0 20px rgba(39, 40, 94, .55);
-}
 
-body{ font-family: "Almarai", sans-serif; }
-.font-en{ font-family:"Montserrat", sans-serif; }
+    :root{
+      --primary:#3a80c4;
+      --accent:#27285e;
+      --grad: linear-gradient(135deg, #3a80c4 0%, #27285e 100%);
+      --glow: 0 0 20px rgba(39, 40, 94, .55);
+      
+      /* إضافات جديدة للشبكة */
+      --grid-line: rgba(255, 255, 255, 0.06); 
+      --card-bg: rgba(255, 255, 255, 0.03);
+    }
 
-.text-primary{ color: var(--primary) !important; }
-.text-accent{ color: var(--accent) !important; }
+    body{ 
+        font-family: "Almarai", sans-serif; 
+        background-color: #0f1020; /* لون خلفية احتياطي داكن */
+        overflow-x: hidden;
+    }
+    .font-en{ font-family:"Montserrat", sans-serif; }
 
-.section-grad{ background: var(--grad); }
+    .text-primary{ color: var(--primary) !important; }
+    .text-accent{ color: var(--accent) !important; }
 
-.py-lg-6{ padding-top: 5rem !important; padding-bottom: 5rem !important; }
+    /* تحديث الخلفية لتدمج تدرجك مع الشبكة */
+    .section-grad{ 
+        background: var(--grad); 
+        position: relative;
+    }
 
-/* NAVBAR */
-.nav-transparent{ background: transparent !important; }
-.nav-scrolled{
-  background: #fff !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
-  padding-top:.5rem !important;
-  padding-bottom:.5rem !important;
-}
-.nav-pill{
-  background: rgba(58,128,196,.35);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,.25);
-}
-.pill-on-white{
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-.navbar .nav-link{ font-weight: 800; font-size: .9rem; }
-.navbar .nav-link:hover{ background: rgba(255,255,255,.10); }
+    .py-lg-6{ padding-top: 5rem !important; padding-bottom: 5rem !important; }
 
-.brand-badge{
-  width: 42px; height: 42px;
-  display:inline-flex; align-items:center; justify-content:center;
-  border-radius: 14px;
-  background: var(--grad);
-  color:#fff;
-  font-weight:800;
-  border:2px solid rgba(255,255,255,.18);
-  box-shadow: var(--glow);
-}
-.brand-badge.big{ width:64px; height:64px; border-radius: 18px; }
+    /* =========================================
+       THE GRID EFFECT (تأثير الشبكة الجديد)
+       =========================================
+    */
+    .grid-overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-size: 50px 50px;
+        background-image: 
+            linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        pointer-events: none; /* عشان ما يمنعش الضغط على الزراير */
+        z-index: 0;
+    }
+    
+    /* جعل المحتوى فوق الشبكة */
+    .container {
+        position: relative;
+        z-index: 2;
+    }
 
-/* HERO */
-.hero{ min-height: 700px; height: 100vh; background: var(--grad); }
-.hero-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.6; }
-.hero-overlay{ position:absolute; inset:0; background: linear-gradient(135deg, rgba(58,128,196,.88), rgba(39,40,94,.78), rgba(58,128,196,.45)); mix-blend-mode: hard-light; }
-.hero-pattern{ position:absolute; inset:0; background-image:url("https://www.transparenttextures.com/patterns/cubes.png"); opacity:.18; }
-.hero-content{ padding-top: 90px; }
-.hero-lead{ max-width: 720px; }
+    /* =========================================
+       Glow Blobs (الإضاءات العائمة)
+       =========================================
+    */
+    .glow-blob {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(58,128,196,0.4) 0%, rgba(39,40,94,0) 70%);
+        border-radius: 50%;
+        filter: blur(50px);
+        animation: floatBlob 10s infinite alternate;
+        z-index: 0;
+        pointer-events: none;
+    }
+    @keyframes floatBlob {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+    }
 
-.badge-pill{
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.25);
-  box-shadow: var(--glow);
-  backdrop-filter: blur(12px);
-}
-.dot{
-  width:8px; height:8px; border-radius:50%;
-  background:#fff; display:inline-block;
-  animation: pulse 1.8s infinite;
-}
-@keyframes pulse{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.35);opacity:.6} }
+    /* =========================================
+       TECH SQUARES (تصميم الكروت الجديد)
+       =========================================
+    */
+    .tech-square {
+        background: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
 
-.hero-wave{
-  position:absolute; bottom:0; left:0; right:0;
-  height: 90px;
-  color: var(--primary);
-}
-.hero-wave svg{ width:100%; height:100%; display:block; fill: currentColor; }
+    /* تأثير اللمعة عند الهوفر */
+    .tech-square::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: 0.5s;
+    }
 
-/* ABOUT */
-.line{ width:32px; height:4px; background: rgba(255,255,255,.6); border-radius: 99px; }
-.stat-card{
-  background: rgba(255,255,255,.10);
-  border:2px solid rgba(255,255,255,.15);
-  backdrop-filter: blur(10px);
-  transition:.25s;
-}
-.stat-card:hover{ background:#fff; color: var(--primary); transform: translateY(-4px); }
+    .tech-square:hover::before {
+        left: 100%;
+    }
 
-.about-card{
-  background: linear-gradient(135deg, rgba(39,40,94,.8), rgba(255,255,255,.7));
-  box-shadow: 0 30px 80px rgba(0,0,0,.25);
-}
-.soft-pattern{ position:absolute; inset:0; background-image:url("https://www.transparenttextures.com/patterns/circuit-board.png"); opacity:.05; }
-.icon-circle{
-  width: 92px; height: 92px; border-radius: 999px;
-  background: #fff; display:flex; align-items:center; justify-content:center;
-  box-shadow: inset 0 0 0 1px rgba(39,40,94,.12);
-}
+    .tech-square:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.4);
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
 
-/* SERVICES / PROGRAMS */
-.service-card, .program-card, .quote-card{
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(10px);
-  transition:.25s;
-  overflow:hidden;
-}
-.service-card:hover, .program-card:hover, .quote-card:hover{
-  transform: translateY(-6px);
-  box-shadow: var(--glow);
-}
-.service-card.light{ background:#fff; border-color: rgba(0,0,0,.06); }
-.service-icon{
-  width:64px; height:64px; border-radius: 18px;
-  background: var(--primary); color:#fff;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 12px 30px rgba(0,0,0,.18);
-}
+    .service-icon, .icon-circle {
+        transition: transform 0.3s ease;
+    }
+    .tech-square:hover .service-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
 
-/* Founder */
-.founder-photo img{ width:100%; height: 420px; object-fit: cover; display:block; }
-.founder-photo{ box-shadow: 0 30px 80px rgba(0,0,0,.25); }
 
-/* Partners */
-.partner-box{
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(10px);
-  font-weight: 800;
-}
+    /* =========================================
+       NAVBAR
+       =========================================
+    */
+    .nav-transparent{ background: transparent !important; }
+    .nav-scrolled{
+      background: rgba(255, 255, 255, 0.95) !important; /* شفافية بسيطة */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      padding-top:.5rem !important;
+      padding-bottom:.5rem !important;
+    }
+    .nav-pill{
+      background: rgba(58,128,196,.35);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.25);
+    }
+    .pill-on-white{
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .navbar .nav-link{ font-weight: 800; font-size: .9rem; }
+    .navbar .nav-link:hover{ background: rgba(255,255,255,.10); }
 
-/* Booking strip */
-.booking-strip{
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(12px);
-  box-shadow: var(--glow);
-}
+    .brand-badge{
+      width: 42px; height: 42px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius: 14px;
+      background: var(--grad);
+      color:#fff;
+      font-weight:800;
+      border:2px solid rgba(255,255,255,.18);
+      box-shadow: var(--glow);
+    }
+    .brand-badge.big{ width:64px; height:64px; border-radius: 18px; }
 
-/* Footer */
-.social{
-  width:46px; height:46px; border-radius: 999px;
-  background: rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.10);
-  display:inline-flex; align-items:center; justify-content:center;
-  color:#fff; text-decoration:none; transition:.2s;
-}
-.social:hover{ transform: translateY(-3px); background: rgba(255,255,255,.14); }
-.footer-link{ color: rgba(255,255,255,.75); text-decoration:none; }
-.footer-link:hover{ color:#fff; }
+    /* =========================================
+       HERO
+       =========================================
+    */
+    .hero{ min-height: 700px; height: 100vh; background: var(--grad); position: relative; overflow: hidden; }
+    /* لاحظ هنا: وضعنا الشبكة داخل الهيرو */
+    
+    .hero-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.4; mix-blend-mode: overlay; }
+    
+    .hero-overlay{ 
+        position:absolute; 
+        inset:0; 
+        background: radial-gradient(circle at center, transparent 0%, #27285e 100%);
+        z-index: 1;
+    }
+    
+    .hero-content{ padding-top: 90px; position: relative; z-index: 10; }
+    .hero-lead{ max-width: 720px; }
+
+    .badge-pill{
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow: var(--glow);
+      backdrop-filter: blur(12px);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background:#fff; display:inline-block;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.35);opacity:.6} }
+
+    .hero-wave{
+      position:absolute; bottom:0; left:0; right:0;
+      height: 90px;
+      color: var(--primary);
+      z-index: 2;
+    }
+    .hero-wave svg{ width:100%; height:100%; display:block; fill: currentColor; }
+
+    /* =========================================
+       ABOUT
+       =========================================
+    */
+    .line{ width:32px; height:4px; background: rgba(255,255,255,.6); border-radius: 99px; }
+    .stat-card{
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255, 255, 255, 0.2); /* تعديل الحدود لتكون أنحف */
+      backdrop-filter: blur(10px);
+      transition:.25s;
+    }
+    .stat-card:hover{ background:#fff; color: var(--primary); transform: translateY(-4px); }
+
+    .about-card{
+      background: linear-gradient(135deg, rgba(39,40,94,.8), rgba(255,255,255,.1));
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .icon-circle{
+      width: 92px; height: 92px; border-radius: 999px;
+      background: #fff; display:flex; align-items:center; justify-content:center;
+      box-shadow: inset 0 0 0 1px rgba(39,40,94,.12);
+    }
+
+    /* =========================================
+       SERVICES & PROGRAMS (تعديلات المربعات)
+       =========================================
+    */
+    .service-card, .program-card {
+        /* تطبيق ستايل المربعات الجديد */
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.15);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        border-radius: 20px !important; /* جعل الزوايا أقل حدة قليلاً */
+    }
+    
+    /* عند الوقوف على الكارد */
+    .service-card:hover, .program-card:hover {
+        background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+        border-color: rgba(255,255,255,0.4);
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .service-card.light{ 
+        background:#fff; 
+        border-color: rgba(0,0,0,.06); 
+    }
+    .service-card.light:hover {
+        background: #f8f9fa;
+        transform: translateY(-8px);
+    }
+
+    .service-icon{
+      width:64px; height:64px; border-radius: 14px; /* تغيير الشكل ليناسب المربعات */
+      background: var(--primary); color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    /* =========================================
+       FOUNDER & OTHERS
+       =========================================
+    */
+    .founder-photo img{ width:100%; height: 420px; object-fit: cover; display:block; }
+    .founder-photo{ 
+        box-shadow: 0 30px 80px rgba(0,0,0,.25); 
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .partner-box{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      font-weight: 800;
+      transition: 0.3s;
+    }
+    .partner-box:hover {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.3);
+    }
+
+    /* Booking strip */
+    .booking-strip{
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--glow);
+    }
+
+    /* Footer */
+    .social{
+      width:46px; height:46px; border-radius: 12px; /* جعلها مربعة قليلاً */
+      background: rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+      display:inline-flex; align-items:center; justify-content:center;
+      color:#fff; text-decoration:none; transition:.2s;
+    }
+    .social:hover{ transform: translateY(-3px); background: rgba(255,255,255,.14); border-color: #fff; }
+    .footer-link{ color: rgba(255,255,255,.75); text-decoration:none; }
+    .footer-link:hover{ color:#fff; padding-right: 5px; transition: 0.2s;}
+
